@@ -1,1 +1,12 @@
-
+{
+  "name": "PROJECT NEVER STOP - INFINITE 30 PRO",
+  "short_name": "NEVER STOP",
+  "description": "Your lifetime discipline and multi-challenge tracker.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07130e",
+  "theme_color": "#087f50",
+  "categories": ["productivity", "lifestyle", "utilities"]
+}
