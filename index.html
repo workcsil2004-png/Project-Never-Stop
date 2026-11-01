@@ -2,337 +2,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07130b">
-<link rel="manifest" href="manifest.json">
-<title>PROJECT NEVER STOP - INFINITE 30 PRO</title>
-<style>
-:root{
---bg:#07130b;--card:#112219;--card2:#192d20;
---text:#effff2;--muted:#9bb6a1;--green:#43ed88;
---border:#294333;--red:#ff6565
-}
-[data-theme=light]{
---bg:#f1f7f2;--card:#fff;--card2:#e4f1e7;
---text:#15271a;--muted:#607867;--green:#138b4c;
---border:#d1e3d5;--red:#cf3333
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:Arial,sans-serif;padding:16px}
-.wrap{max-width:850px;margin:auto}
-header{text-align:center;padding:20px 0}
-.logo{color:var(--green);letter-spacing:3px;font-size:12px}
-h1{font-size:clamp(22px,5vw,34px);color:var(--green)}
-h2{font-size:18px}
-.muted,small{color:var(--muted)}
-.card,.day,.challenge{
-background:var(--card);border:1px solid var(--border);
-border-radius:15px;padding:14px;margin:12px 0
-}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.stat{background:var(--card2);padding:13px;border-radius:12px}
-.value{font-size:26px;color:var(--green);font-weight:bold;margin-top:7px}
-button,input,select,textarea{font:inherit}
-button{background:var(--card2);color:var(--text);
-border:1px solid var(--border);border-radius:9px;
-padding:11px;cursor:pointer}
-.primary{background:var(--green);color:#062010;font-weight:bold}
-.row,.top{display:flex;gap:8px;align-items:center;
-justify-content:space-between;flex-wrap:wrap}
-nav{display:flex;gap:6px;overflow:auto;margin:15px 0}
-nav button{white-space:nowrap;font-size:12px}
-nav .active{background:var(--green);color:#062010}
-input,select,textarea{background:var(--bg);color:var(--text);
-border:1px solid var(--border);border-radius:9px;padding:11px;width:100%}
-textarea{min-height:100px}
-.progress{height:9px;background:var(--card2);border-radius:20px;overflow:hidden;margin:10px 0}
-.progress div{height:100%;background:var(--green)}
-.badge{color:var(--green);background:var(--card2);
-border-radius:20px;padding:5px 9px;font-size:11px}
-.daychecks{display:flex;gap:8px;margin-top:12px}
-.tick{flex:1}
-.tick.done{background:var(--green);color:#062010}
-.achievement{border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center}
-.locked{opacity:.4}
-.heat{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
-.heat div{aspect-ratio:1;background:var(--card2);border-radius:4px}
-.heat .on{background:var(--green)}
-.hidden{display:none!important}
-footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
-@media(min-width:650px){.stats{grid-template-columns:repeat(4,1fr)}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#087f50">
+  <meta name="description" content="PROJECT NEVER STOP - Your lifetime discipline system">
+
+  <title>PROJECT NEVER STOP | INFINITE 30 PRO</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NEVER STOP">
 </head>
+
 <body>
-<div class="wrap">
-<header>
-<div class="logo">∞ YOUR LIFETIME DISCIPLINE SYSTEM</div>
-<h1>PROJECT NEVER STOP</h1>
-<div class="muted">INFINITE 30 PRO • NEVER GIVE UP</div>
-</header>
 
-<nav>
-<button class="active" data-tab="dashboard">Dashboard</button>
-<button data-tab="challenges">Challenges</button>
-<button data-tab="history">History</button>
-<button data-tab="insights">Insights</button>
-<button data-tab="settings">Settings</button>
-</nav>
+  <div id="app">
 
-<main id="dashboard" class="page">
-<div class="grid stats">
-<div class="stat"><small>LIFETIME DAYS</small><div class="value" id="life">0</div></div>
-<div class="stat"><small>TOTAL STARS ⭐</small><div class="value" id="stars">0</div></div>
-<div class="stat"><small>CURRENT STREAK 🔥</small><div class="value" id="streak">0</div></div>
-<div class="stat"><small>BEST STREAK 🏆</small><div class="value" id="best">0</div></div>
-</div>
-<div class="card">
-<div class="top"><h2>NEXT 30 DAYS</h2><span class="badge" id="activeCount">0/30</span></div>
-<div class="progress"><div id="progress" style="width:0%"></div></div>
-<small>One day at a time. Always 30 active days.</small>
-</div>
-<div class="card">
-<div class="top"><h2>My Challenges</h2><button class="primary" onclick="addChallenge()">+ Add</button></div>
-<div id="challengeList"></div>
-</div>
-<div class="card"><h2>Daily Motivation</h2><p id="quote" class="muted"></p></div>
-<div class="card"><h2>Achievements</h2><div class="grid" id="achievements"></div></div>
-</main>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">∞</div>
+        <div>
+          <h1>PROJECT NEVER STOP</h1>
+          <p>INFINITE 30 PRO</p>
+        </div>
+      </div>
 
-<main id="challenges" class="page hidden">
-<div class="card">
-<div class="top"><h2>Challenge Manager</h2><button class="primary" onclick="addChallenge()">+ New</button></div>
-<div id="manager"></div>
-</div>
-<div class="card">
-<h2 id="selectedTitle">Select a challenge</h2>
-<div class="row">
-<button onclick="renameChallenge()">✏ Rename</button>
-<button onclick="undo()">↶ Undo</button>
-<button onclick="archiveChallenge()">Archive</button>
-</div>
-<p class="muted" id="selectedStats"></p>
-<div id="dayList"></div>
-</div>
-</main>
+      <div class="header-actions">
+        <button id="themeToggle" class="icon-btn" aria-label="Change theme">🌙</button>
+        <button id="settingsBtn" class="icon-btn" aria-label="Settings">⚙️</button>
+      </div>
+    </header>
 
-<main id="history" class="page hidden">
-<div class="card"><h2>Lifetime History</h2><div id="historyList"></div></div>
-</main>
+    <main>
 
-<main id="insights" class="page hidden">
-<div class="card"><h2>Weekly Report</h2><div id="weekly"></div></div>
-<div class="card"><h2>30-Day Discipline Heatmap</h2><div class="heat" id="heat"></div></div>
-<div class="card">
-<h2>Daily Journal</h2><p class="muted" id="journalDate"></p>
-<textarea id="journal" placeholder="Write your thoughts..."></textarea>
-<button class="primary" onclick="saveJournal()">Save Journal</button>
-</div>
-</main>
+      <section class="hero">
+        <p class="eyebrow">YOUR LIFETIME DISCIPLINE SYSTEM</p>
+        <h2>NEVER STOP.<br><span>NEVER SETTLE.</span></h2>
+        <p>Don't worry about the next 365 days. Focus on your next 30.</p>
+      </section>
 
-<main id="settings" class="page hidden">
-<div class="card">
-<h2>Appearance</h2>
-<select id="theme" onchange="setTheme(this.value)">
-<option value="dark">Dark Mode</option>
-<option value="light">Light Mode</option>
-<option value="system">System Mode</option>
-</select>
-</div>
-<div class="card">
-<h2>Backup & Restore</h2>
-<button class="primary" onclick="backup()">Export Backup</button>
-<button onclick="document.getElementById('restore').click()">Import Backup</button>
-<input id="restore" type="file" accept=".json" class="hidden" onchange="restore(event)">
-</div>
-<div class="card">
-<h2>Reset</h2>
-<button onclick="resetAll()" style="color:var(--red)">Reset All Data</button>
-</div>
-</main>
-<footer>PROJECT NEVER STOP • INFINITE 30 PRO</footer>
-</div>
+      <section id="dashboard" class="page active">
 
-<script>
-const KEY="never_stop_pro_v2";
-const quotes=[
-"Discipline is choosing what you want most.",
-"Small steps create extraordinary results.",
-"Keep the promises you make to yourself.",
-"Never miss twice. Start again.",
-"Consistency beats temporary motivation.",
-"Your future is built today."
-];
-const uid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random());
-const newDay=()=>({id:uid(),morning:false,evening:false,mAt:null,eAt:null});
-const newChallenge=name=>({
-id:uid(),name,archived:false,best:0,history:[],
-active:Array.from({length:30},newDay)
-});
-function load(){
-try{
-let s=JSON.parse(localStorage.getItem(KEY));
-if(s&&Array.isArray(s.challenges))return s;
-}catch(e){}
-return {challenges:[newChallenge("My First Challenge")],journal:{},theme:"dark"};
-}
-let state=load();
-let selected=state.challenges.find(c=>!c.archived)?.id||null;
-function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function current(){return state.challenges.find(c=>c.id===selected)}
-function activeChallenges(){return state.challenges.filter(c=>!c.archived)}
-function totalTicks(c){return [...c.history,...c.active].reduce((n,d)=>n+Number(d.morning)+Number(d.evening),0)}
-function addChallenge(){
-let name=prompt("Enter challenge name:");
-if(!name?.trim())return;
-let c=newChallenge(name.trim());state.challenges.push(c);selected=c.id;save();
-}
-function selectChallenge(id){selected=id;render()}
-function renameChallenge(){
-let c=current();if(!c)return;
-let name=prompt("New challenge name:",c.name);
-if(name?.trim()){c.name=name.trim();save()}
-}
-function archiveChallenge(){
-let c=current();if(!c)return;
-if(confirm("Archive this challenge? History will be kept.")){
-c.archived=true;selected=activeChallenges()[0]?.id||null;save()
-}
-}
-function toggleTick(id,part){
-let c=current();if(!c)return;
-let i=c.active.findIndex(d=>d.id===id);if(i<0)return;
-let d=c.active[i],p=part==="morning"?"morning":"evening";
-let time=part==="morning"?"mAt":"eAt";
-d[p]=!d[p];d[time]=d[p]?new Date().toISOString():null;
-if(d.morning&&d.evening){
-c.active.splice(i,1);
-c.history.push({...d,completedAt:new Date().toISOString(),originalIndex:i});
-c.active.push(newDay());
-c.best=Math.max(c.best,streak(c));
-}
-save();
-}
-function undo(){
-let c=current();if(!c?.history.length){alert("Nothing to undo");return}
-let d=c.history.pop();c.active.pop();
-delete d.completedAt;
-let i=Math.min(d.originalIndex??0,c.active.length);
-delete d.originalIndex;c.active.splice(i,0,d);save();
-}
-function streak(c){
-let h=c.history.slice().sort((a,b)=>a.completedAt.localeCompare(b.completedAt));
-let n=0;
-for(let i=h.length-1;i>=0;i--){
-if(i<h.length-1&&new Date(h[i+1].completedAt)-new Date(h[i].completedAt)>86400000)break;
-n++;
-}
-return n;
-}
-function achievements(n){
-return [
-[7,"First Champion","🥉"],
-[15,"Halfway Hero","🥈"],
-[21,"Discipline Master","🥇"],
-[30,"Legend","🏆"],
-[50,"Unstoppable","⚡"],
-[100,"Century Club","💯"],
-[365,"Year of Discipline","👑"]
-].map(a=>({days:a[0],name:a[1],icon:a[2],unlocked:n>=a[0]}));
-}
-function render(){
-let active=activeChallenges();
-if(!active.some(c=>c.id===selected))selected=active[0]?.id||null;
-let c=current(),hist=state.challenges.flatMap(x=>x.history);
-let life=hist.length,stars=state.challenges.reduce((n,x)=>n+totalTicks(x),0);
-document.getElementById("life").textContent=life;
-document.getElementById("stars").textContent=stars;
-document.getElementById("streak").textContent=c?streak(c):0;
-document.getElementById("best").textContent=Math.max(0,...state.challenges.map(x=>x.best));
-document.getElementById("quote").textContent=quotes[new Date().getDate()%quotes.length];
-document.getElementById("challengeList").innerHTML=active.map(x=>`
-<div class="challenge"><div class="top"><b>${esc(x.name)}</b><span class="badge">${x.history.length} completed</span></div>
-<div class="progress"><div style="width:${x.history.length%30/30*100}%"></div></div>
-<button onclick="selectChallenge('${x.id}');tab('challenges')">Open Tracker →</button></div>`).join("")||"No challenges yet.";
-document.getElementById("manager").innerHTML=active.map(x=>`
-<div class="challenge"><div class="top"><b>${esc(x.name)}</b><button onclick="selectChallenge('${x.id}')">Select</button></div>
-<small>${x.history.length} completed days • ${totalTicks(x)} stars</small></div>`).join("")||"No active challenges.";
-document.getElementById("selectedTitle").textContent=c?c.name:"No challenge selected";
-document.getElementById("selectedStats").textContent=c?`${c.history.length} lifetime completed • ${c.active.length} active days • ${totalTicks(c)} stars`:"Create a challenge first.";
-document.getElementById("activeCount").textContent=c?`${c.history.length%30}/30`:"0/30";
-document.getElementById("progress").style.width=c?`${c.history.length%30/30*100}%`:"0%";
-document.getElementById("dayList").innerHTML=c?c.active.map((d,i)=>`
-<div class="day"><div class="top"><b>DAY ${i+1}</b>
-<span class="badge">${d.morning&&d.evening?"COMPLETE":d.morning||d.evening?"IN PROGRESS":"PENDING"}</span></div>
-<div class="daychecks">
-<button class="tick ${d.morning?"done":""}" onclick="toggleTick('${d.id}','morning')">☀ Morning ${d.morning?"✓":"○"}</button>
-<button class="tick ${d.evening?"done":""}" onclick="toggleTick('${d.id}','evening')">🌙 Evening ${d.evening?"✓":"○"}</button>
-</div></div>`).join(""):"";
-document.getElementById("achievements").innerHTML=achievements(life).map(a=>`
-<div class="achievement ${a.unlocked?"":"locked"}"><div style="font-size:25px">${a.icon}</div>
-<b>${a.name}</b><p class="muted">${a.days} days</p>${a.unlocked?"UNLOCKED":"LOCKED"}</div>`).join("");
-document.getElementById("historyList").innerHTML=state.challenges.map(x=>`
-<div class="challenge"><b>${esc(x.name)}</b><p class="muted">${x.history.length} completed days</p>
-${x.history.slice().reverse().map(h=>`<small>✓ ${new Date(h.completedAt).toLocaleString()}</small><br>`).join("")}</div>`).join("");
-let since=Date.now()-7*86400000;
-let week=hist.filter(h=>new Date(h.completedAt).getTime()>=since).length;
-document.getElementById("weekly").innerHTML=`<div class="value">${week}</div><small>Completed days in last 7 days</small>`;
-let dates=new Set();
-state.challenges.forEach(x=>[...x.history,...x.active].forEach(d=>{
-[d.mAt,d.eAt].filter(Boolean).forEach(t=>dates.add(t.slice(0,10)));
-}));
-document.getElementById("heat").innerHTML=Array.from({length:30},(_,i)=>{
-let d=new Date();d.setDate(d.getDate()-29+i);
-return `<div class="${dates.has(d.toISOString().slice(0,10))?"on":""}"></div>`;
-}).join("");
-let today=new Date().toISOString().slice(0,10);
-document.getElementById("journalDate").textContent=today;
-document.getElementById("journal").value=state.journal[today]||"";
-document.getElementById("theme").value=state.theme||"dark";
-}
-function tab(t){
-document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
-document.getElementById(t).classList.remove("hidden");
-document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
-}
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>tab(b.dataset.tab));
-function saveJournal(){
-let k=new Date().toISOString().slice(0,10);
-state.journal[k]=document.getElementById("journal").value;save();alert("Journal saved!");
-}
-function setTheme(t){state.theme=t;applyTheme();save()}
-function applyTheme(){
-let t=state.theme||"dark";
-if(t==="system")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
-document.documentElement.dataset.theme=t;
-}
-function backup(){
-let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
-let a=document.createElement("a");a.href=URL.createObjectURL(b);
-a.download="project-never-stop-backup.json";a.click();URL.revokeObjectURL(a.href);
-}
-function restore(e){
-let f=e.target.files[0];if(!f)return;
-let r=new FileReader();
-r.onload=()=>{
-try{
-let x=JSON.parse(r.result);
-if(!Array.isArray(x.challenges)||!x.journal)throw Error();
-if(confirm("Replace current data with backup?")){
-state=x;selected=activeChallenges()[0]?.id||null;save();applyTheme();alert("Restored!");
-}
-}catch(err){alert("Invalid backup file")}
-};
-r.readAsText(f);e.target.value="";
-}
-function resetAll(){
-if(!confirm("Delete ALL challenges, history and journal? Export backup first!"))return;
-state={challenges:[newChallenge("My First Challenge")],journal:{},theme:"dark"};
-selected=state.challenges[0].id;save();applyTheme();
-}
-applyTheme();render();
-</script>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Lifetime Days</span>
+            <strong id="lifetimeDays">0</strong>
+            <small>Completed days</small>
+          </article>
+
+          <article class="stat-card">
+            <span>Total Stars</span>
+            <strong id="totalStars">0 ⭐</strong>
+            <small>Lifetime stars</small>
+          </article>
+
+          <article class="stat-card">
+            <span>Current Streak</span>
+            <strong id="currentStreak">0 🔥</strong>
+            <small>Consecutive days</small>
+          </article>
+
+          <article class="stat-card">
+            <span>Best Streak</span>
+            <strong id="bestStreak">0 🏆</strong>
+            <small>Personal record</small>
+          </article>
+
+          <article class="stat-card">
+            <span>Total Ticks</span>
+            <strong id="totalTicks">0</strong>
+            <small>Morning + Evening</small>
+          </article>
+
+          <article class="stat-card">
+            <span>No Zero Days</span>
+            <strong id="noZeroDays">0</strong>
+            <small>Days with activity</small>
+          </article>
+        </div>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR ACTIVE WINDOW</p>
+              <h2>Next 30 Days</h2>
+            </div>
+            <strong id="windowProgress">0/30</strong>
+          </div>
+          <div class="progress-track">
+            <div id="windowProgressBar" class="progress-fill"></div>
+          </div>
+          <p id="windowMessage">Your next 30 days start here.</p>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">YOUR CHALLENGES</p>
+              <h2>Challenge Manager</h2>
+            </div>
+            <button id="addChallengeBtn" class="primary-btn">+ Add</button>
+          </div>
+
+          <div id="challengeList"></div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">TODAY'S CHALLENGE</p>
+          <h2 id="activeChallengeName">My Daily Goal</h2>
+
+          <div class="tick-grid">
+            <button id="morningTick" class="tick-btn">
+              <span>☀️</span>
+              <strong>Morning</strong>
+              <small>Not completed</small>
+            </button>
+
+            <button id="eveningTick" class="tick-btn">
+              <span>🌙</span>
+              <strong>Evening</strong>
+              <small>Not completed</small>
+            </button>
+          </div>
+
+          <p id="dailyMessage">Two ticks. One completed day.</p>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">YOUR DAILY MOTIVATION</p>
+          <h2 id="motivationText">Discipline beats motivation.</h2>
+        </section>
+
+      </section>
+
+      <section id="achievements" class="page">
+        <h2>🏆 Achievement Centre</h2>
+        <div id="achievementList"></div>
+        <h2>Trophy Room</h2>
+        <div id="trophyRoom"></div>
+      </section>
+
+      <section id="analytics" class="page">
+        <h2>📊 Your Growth</h2>
+        <div id="weeklyReport"></div>
+        <div id="heatmap"></div>
+        <div id="analyticsCharts"></div>
+      </section>
+
+      <section id="journal" class="page">
+        <h2>📖 Daily Journal</h2>
+        <textarea id="journalEntry" placeholder="What did you achieve today?"></textarea>
+        <button id="saveJournalBtn" class="primary-btn">Save Journal</button>
+        <div id="journalHistory"></div>
+      </section>
+
+      <section id="history" class="page">
+        <h2>📜 Lifetime History</h2>
+        <div id="historyList"></div>
+      </section>
+
+      <section id="settings" class="page">
+        <h2>⚙️ Settings</h2>
+        <div id="settingsContent"></div>
+      </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+      <button data-page="dashboard" class="nav-btn active">🏠<span>Home</span></button>
+      <button data-page="achievements" class="nav-btn">🏆<span>Awards</span></button>
+      <button data-page="analytics" class="nav-btn">📊<span>Growth</span></button>
+      <button data-page="journal" class="nav-btn">📖<span>Journal</span></button>
+      <button data-page="history" class="nav-btn">📜<span>History</span></button>
+    </nav>
+
+    <div id="modalContainer"></div>
+    <div id="toastContainer" aria-live="polite"></div>
+
+  </div>
+
+  <script src="./script.js" defer></script>
+
 </body>
 </html>
